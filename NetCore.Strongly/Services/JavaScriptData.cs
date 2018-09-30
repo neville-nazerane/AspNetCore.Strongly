@@ -29,7 +29,7 @@ namespace NetCore.Strongly.Services
 
         public string Generate(JavaScriptData data)
         {
-            string js = "";
+            string js = JsContent.content;
             if (data.Bindings.Count > 0)
             {
                 js += $@"var stronglyData = {html.Raw(FormatObject(data))};";
