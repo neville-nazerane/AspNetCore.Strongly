@@ -12,6 +12,8 @@ namespace NetCore.Strongly.TagHelpers
         private readonly JavaScriptData data;
         private readonly JavaScriptHandler handler;
 
+        public bool ExcludeCommon { get; set; }
+
         public StronglyScriptsTagHelper(IServiceProvider service)
         {
             data = service.GetService<JavaScriptData>();
@@ -22,7 +24,7 @@ namespace NetCore.Strongly.TagHelpers
         {
             base.Process(context, output);
             output.TagName = "script";
-            output.Content.SetHtmlContent(handler.Generate(data));
+            output.Content.SetHtmlContent(handler.Generate(data, ExcludeCommon));
         }
 
     }

@@ -68,7 +68,8 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-    <strongly-scripts></strongly-scripts>
+    <script src="~/stronglyScript.js" ></script>
+    <strongly-scripts exclude-common="true"></strongly-scripts>
 
     @RenderSection("Scripts", required: false)
 </body>

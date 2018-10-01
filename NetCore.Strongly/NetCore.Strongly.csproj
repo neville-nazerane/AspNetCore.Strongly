@@ -19,8 +19,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.1.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <Binaries Include="*.dll;*.exe"/>
   </ItemGroup>
 
-  
-  
+  <Target Name="SetACL">
+    <Message Text="Hello world" />
+    <Exec Command="call post-compile.cmd"/>
+  </Target>
+
 </Project>

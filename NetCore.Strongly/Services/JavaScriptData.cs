@@ -27,9 +27,10 @@ namespace NetCore.Strongly.Services
                 bind.Compute(provider);
         }
 
-        public string Generate(JavaScriptData data)
+        public string Generate(JavaScriptData data, bool excludeCommon)
         {
-            string js = JsContent.content;
+
+            string js = excludeCommon ? "" : JsContent.content;
             if (data.Bindings.Count > 0)
             {
                 js += $@"var stronglyData = {html.Raw(FormatObject(data))};";
