@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.5.2-beta</Version>
+    <Version>0.5.3-beta</Version>
     <PackageId>AspNetCore.Strongly</PackageId>
     <Description>A strongly typed web framework concept</Description>
     <PackageReleaseNotes>
-      - Common js code in Js file accessable via middleware
-      - Optionally common js code will be appended to strongly-scripts tag helper
+      - Bug fixes
+      - Cleaner setup
     </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/neville-nazerane/AspNetCore.Strongly</PackageProjectUrl>
   </PropertyGroup>
