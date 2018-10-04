@@ -12,7 +12,7 @@ function buildBindings() {
             $.each(selected.serializeArray(), function () {
                 result[this.name] = this.value;
             });
-            stronglyData.bindings[a].data = JSON.stringify(result);
+            stronglyData.bindings[a].rawData = JSON.stringify(result);
         }
     }
 }

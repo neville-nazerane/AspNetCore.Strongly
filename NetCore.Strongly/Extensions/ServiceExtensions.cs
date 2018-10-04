@@ -10,17 +10,20 @@ namespace NetCore.Strongly.Extensions
     {
 
         public static IServiceCollection AddStrongly(this IServiceCollection services,
-                            Action<StronglyServiceOptions> options)
+                            Action<StronglyServiceOptions> options = null)
         {
-            services.AddSingleton<PathMappings>()
+            services
+                //.AddSingleton<PathMappings>()
+                    .AddSingleton<TypeHandler>()
+                    .AddScoped<PathHandler>()
                     .AddScoped<JavaScriptData>()
                     .AddScoped<JavaScriptHandler>()
                                    .AddScoped(typeof(StronglyControl<>));
             var opts = new StronglyServiceOptions(services);
             options?.Invoke(opts);
-            var mappings = new PathMappings();
-            opts.mappingActions.ForEach(act => act(mappings));
-            services.AddSingleton(mappings);
+            //var mappings = new PathMappings();
+            //opts.mappingActions.ForEach(act => act(mappings));
+            //services.AddSingleton(mappings);
             return services;
         }
     }

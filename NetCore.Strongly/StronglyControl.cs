@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
+using NetCore.Strongly.Extensions;
+using NetCore.Strongly.Services;
 
 namespace NetCore.Strongly
 {
@@ -10,39 +12,32 @@ namespace NetCore.Strongly
     public class StronglyControl<TContext>
         where TContext : class
     {
-        readonly TContext _context;
+        private readonly TypeHandler typeHandler;
 
         public StronglyControl(IServiceProvider provider)
         {
-            _context = provider.GetService<TContext>();
+            typeHandler = provider.GetService<TypeHandler>();
         }
 
         public PropertyBindingResponse Bind<T>(Expression<Func<TContext, T>> expression)
         {
             if (expression.Body is MemberExpression member)
-                return new PropertyBindingResponse(new RecievedContext {
-                    ClassName = typeof(TContext).AssemblyQualifiedName,
-                    PropertyName = member.Member.Name,
-                    TypeName = typeof(T).AssemblyQualifiedName
+                return new PropertyBindingResponse(new PropertyContext {
+                    Key = typeHandler.GetPropertyKey(expression)
                 });
             else throw new InvalidOperationException("Invalid lamda provided. only properties or fields allowed");
         }
 
         public EventResponse<T> Run<T>(Expression<Func<TContext, T>> toRun)
-        {
-            if (toRun.Body is MethodCallExpression method)
-                return new EventResponse<T> {
-                    path = $"/strongly/{typeof(TContext).Name}/{method.Method.Name}"
-                };   
-            throw new InvalidOperationException("Invalid lamda provided. function is expected.");
-        }
+            => new EventResponse<T>
+            {
+                path = $"{StronglyMiddleware.startPath}/{typeHandler.GetMethodKey(toRun)}"
+            };
 
         public EventResponse Run(Expression<Action<TContext>> toRun)
-        {
-            var result = new EventResponse();
-            toRun.Compile()(_context);
-            return result;
-        }
+            => new EventResponse {
+                path = $"{StronglyMiddleware.startPath}/{typeHandler.GetMethodKey(toRun)}"
+            };
 
     }
 }

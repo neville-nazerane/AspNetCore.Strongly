@@ -13,24 +13,22 @@ namespace NetCore.Strongly.Services
     class JavaScriptHandler
     {
         private readonly IHtmlHelper html;
-        private readonly IServiceProvider provider;
 
-        public JavaScriptHandler(IHtmlHelper html, IServiceProvider provider)
+        public JavaScriptHandler(IHtmlHelper html)
         {
             this.html = html;
-            this.provider = provider;
         }
 
-        public void Compute(JavaScriptData data)
-        {
-            foreach (var bind in data.Bindings.Values)
-                bind.Compute(provider);
-        }
+        //public void Compute(JavaScriptData data)
+        //{
+        //    foreach (var bind in data.Bindings.Values)
+        //        bind.Compute(provider);
+        //}
 
         public string Generate(JavaScriptData data, bool excludeCommon)
         {
 
-            string js = excludeCommon ? "" : JsContent.content;
+            string js = excludeCommon ? "" : JsContent.allContent;
             if (data.Bindings.Count > 0)
             {
                 js += $@"var stronglyData = {html.Raw(FormatObject(data))};";
@@ -56,11 +54,11 @@ namespace NetCore.Strongly.Services
     class JavaScriptData
     {
 
-        public Dictionary<string, RecievedContext> Bindings { get; set; }
+        public Dictionary<string, PropertyContext> Bindings { get; set; }
 
         public JavaScriptData()
         {
-            Bindings = new Dictionary<string, RecievedContext>();
+            Bindings = new Dictionary<string, PropertyContext>();
         }
 
 

@@ -1,0 +1,40 @@
+﻿@page
+@model TestWebApp.Pages.StronglyModel
+
+@{
+    ViewData["Title"] = "Strongly";
+}
+
+<h2>Strongly</h2>
+
+<h4>Comment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" st-bind="Model.CommentBind">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Comment.Title" class="control-label"></label>
+                <input name="Title" class="form-control" />
+                <span asp-validation-for="Comment.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comment.Content" class="control-label"></label>
+                <input name="Content" class="form-control" />
+                <span asp-validation-for="Comment.Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comment.Url" class="control-label"></label>
+                <input name="Url" class="form-control" />
+                <span asp-validation-for="Comment.Url" class="text-danger"></span>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+<button class="btn btn-success" st-click="Model.AddEvent">Add</button>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

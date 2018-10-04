@@ -36,9 +36,7 @@ namespace WebApp
 
             services.AddScoped<SampleService>();
 
-            services.AddStrongly(opts => 
-                opts.Add<SampleService>()
-            );
+            services.AddStrongly();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

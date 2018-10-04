@@ -11,51 +11,50 @@ using System.IO;
 
 namespace NetCore.Strongly.Extensions
 {
-    class PathMappings
-    {
+    //class PathMappings
+    //{
 
-        readonly Dictionary<string, Action<HttpContext>> contents;
+    //    readonly Dictionary<string, Action<HttpContext>> contents;
 
-        public PathMappings()
-        {
-            contents = new Dictionary<string, Action<HttpContext>>();
-        }
+    //    public PathMappings()
+    //    {
+    //        contents = new Dictionary<string, Action<HttpContext>>();
+    //    }
 
-        public Action<HttpContext> this[string path]
-        {
-            get
-            {
-                if (contents.ContainsKey(path))
-                    return contents[path];
-                else return null;
-            }
-        }
+    //    public Action<HttpContext> this[string path]
+    //    {
+    //        get
+    //        {
+    //            if (contents.ContainsKey(path))
+    //                return contents[path];
+    //            else return null;
+    //        }
+    //    }
 
-        public void Add<TContext>(string basePath)
-        {
-            Type type = typeof(TContext);
-            foreach (var method in type.GetMethods()
-                    .Where(m => m.IsPublic && m.DeclaringType == type))
-            {
-                string path = $"{basePath}/{type.Name}/{method.Name}";
-                var parameters = method.GetParameters();
-                contents[path] = async httpContext => {
+    //    public void Add<TContext>(string basePath)
+    //    {
+    //        Type type = typeof(TContext);
+    //        foreach (var method in type.GetMethods()
+    //                .Where(m => m.IsPublic && m.DeclaringType == type))
+    //        {
+    //            string path = $"{basePath}/{type.Name}/{method.Name}";
+    //            var parameters = method.GetParameters();
+    //            contents[path] = async httpContext => {
 
-                    var context = httpContext.RequestServices.GetService<TContext>();
-                    var handler = httpContext.RequestServices.GetService<JavaScriptHandler>();
-                    if (context == null) return;
-                    using (var reader = new StreamReader(httpContext.Request.Body))
-                    {
-                        string contents = reader.ReadToEnd();
-                        handler.Compute(JavaScriptHandler.Create(contents));
-                    }
-                    var result = method.Invoke(context, new object[] { });
-                    
-                    await httpContext.Response.WriteAsync(JsonConvert.SerializeObject(result));
-                };
+    //                var context = httpContext.RequestServices.GetService<TContext>();
+    //                var handler = httpContext.RequestServices.GetService<JavaScriptHandler>();
+    //                if (context == null) return;
+    //                using (var reader = new StreamReader(httpContext.Request.Body))
+    //                {
+    //                    string contents = reader.ReadToEnd();
+    //                    handler.Compute(JavaScriptHandler.Create(contents));
+    //                }
+    //                var result = method.Invoke(context, new object[] { });
+    //                await httpContext.Response.WriteAsync(JsonConvert.SerializeObject(result));
+    //            };
 
-            }
-        }
+    //        }
+    //    }
 
-    }
+    //}
 }

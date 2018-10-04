@@ -7,9 +7,9 @@ namespace NetCore.Strongly
     public class PropertyBindingResponse
     {
 
-        internal RecievedContext Context { get; set; }
+        internal PropertyContext Context { get; set; }
 
-        internal PropertyBindingResponse(RecievedContext context)
+        internal PropertyBindingResponse(PropertyContext context)
         {
             Context = context;
         }

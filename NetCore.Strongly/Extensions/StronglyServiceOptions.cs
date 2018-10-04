@@ -12,16 +12,16 @@ namespace NetCore.Strongly.Extensions
         internal StronglyServiceOptions(IServiceCollection services)
         {
             this.services = services;
-            mappingActions = new List<Action<PathMappings>>();
+            //mappingActions = new List<Action<PathMappings>>();
         }
 
-        internal List<Action<PathMappings>> mappingActions;
+        //internal List<Action<PathMappings>> mappingActions;
 
-        public StronglyServiceOptions Add<TContext>()
-        {
-            mappingActions.Add(map => map.Add<TContext>("/strongly"));
-            return this;
-        }
+        //public StronglyServiceOptions Add<TContext>()
+        //{
+        //    mappingActions.Add(map => map.Add<TContext>("/strongly"));
+        //    return this;
+        //}
 
     }
 }
